@@ -1,7 +1,12 @@
 ﻿#pragma once
 
+#include<wrl\client.h>
+#include<memory>
 #include "Direct3DBase.h"
-
+#include "SpriteBatch.h"
+#include <directxmath.h>
+#include"Ball.h"
+using namespace Windows::Devices::Sensors;
 
 // This class renders a simple spinning cube.
 ref class Renderer sealed : public Direct3DBase
@@ -20,13 +25,14 @@ public:
 private:
 	bool m_loadingComplete;
 
-	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
-	Microsoft::WRL::ComPtr<ID3D11Buffer> m_vertexBuffer;
-	Microsoft::WRL::ComPtr<ID3D11Buffer> m_indexBuffer;
-	Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vertexShader;
-	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pixelShader;
-	Microsoft::WRL::ComPtr<ID3D11Buffer> m_constantBuffer;
-
 	uint32 m_indexCount;
+
+	std::unique_ptr<SpriteBatch> m_spriteBatch;
+	Accelerometer^ m_accelerometer;
+	AccelerometerReading^ m_accReading;
+
+	float scale;
+	Ball* m_ball;
+
 	//ModelViewProjectionConstantBuffer m_constantBufferData;
 };
